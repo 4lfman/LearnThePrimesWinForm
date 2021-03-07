@@ -36,6 +36,7 @@ namespace LearnThePrimesWinForm
             this.remainingGuessesBar1 = new System.Windows.Forms.ProgressBar();
             this.remainingGuessesBar2 = new System.Windows.Forms.ProgressBar();
             this.remainingGuessesBar3 = new System.Windows.Forms.ProgressBar();
+            this.highScoreLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.guessNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,7 +60,7 @@ namespace LearnThePrimesWinForm
             // primeNrLbl
             // 
             this.primeNrLbl.AutoSize = true;
-            this.primeNrLbl.Location = new System.Drawing.Point(183, 152);
+            this.primeNrLbl.Location = new System.Drawing.Point(197, 136);
             this.primeNrLbl.Name = "primeNrLbl";
             this.primeNrLbl.Size = new System.Drawing.Size(57, 13);
             this.primeNrLbl.TabIndex = 2;
@@ -94,12 +95,22 @@ namespace LearnThePrimesWinForm
             this.remainingGuessesBar3.Size = new System.Drawing.Size(22, 62);
             this.remainingGuessesBar3.TabIndex = 6;
             // 
+            // highScoreLabel
+            // 
+            this.highScoreLabel.AutoSize = true;
+            this.highScoreLabel.Location = new System.Drawing.Point(197, 153);
+            this.highScoreLabel.Name = "highScoreLabel";
+            this.highScoreLabel.Size = new System.Drawing.Size(35, 13);
+            this.highScoreLabel.TabIndex = 7;
+            this.highScoreLabel.Text = "label1";
+            // 
             // Form1
             // 
             this.AcceptButton = this.enterBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 276);
+            this.Controls.Add(this.highScoreLabel);
             this.Controls.Add(this.remainingGuessesBar3);
             this.Controls.Add(this.remainingGuessesBar2);
             this.Controls.Add(this.remainingGuessesBar1);
@@ -127,6 +138,7 @@ namespace LearnThePrimesWinForm
         private System.Windows.Forms.ProgressBar remainingGuessesBar1;
         private System.Windows.Forms.ProgressBar remainingGuessesBar2;
         private System.Windows.Forms.ProgressBar remainingGuessesBar3;
+        private System.Windows.Forms.Label highScoreLabel;
     }
 }
 

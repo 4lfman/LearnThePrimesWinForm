@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LearnThePrimesWinForm
 {
@@ -15,6 +16,8 @@ namespace LearnThePrimesWinForm
         List<int> primes = new List<int>(GeneratePrimesNaive(100));
         int n = 0;
         int remainingGuesses = 3;
+        public static string dirParameter = AppDomain.CurrentDomain.BaseDirectory + @"\SaveFile.txt";
+        string stringHighScore;
 
         /// <summary>
         /// Generates the primes that are going to be 
@@ -49,6 +52,9 @@ namespace LearnThePrimesWinForm
         public Form1()
         {
             InitializeComponent();
+
+            highScoreLabel.Text = ("Highscore: " + ReadTxt());
+
             guessNumericUpDown.Select(0, guessNumericUpDown.Value.ToString().Length);
             remainingGuessesBar1.Value = 100;
             remainingGuessesBar2.Value = 100;
@@ -73,10 +79,11 @@ namespace LearnThePrimesWinForm
                 remainingGuesses--;
                 SetRemainingLives();
                 //remainingGuessesBar1.Value -= 33;
-                if(remainingGuesses == 0)
+                if (remainingGuesses == 0)
                 {
                     BackColor = Color.Red;
                     enterBtn.Enabled = false;
+                    SaveHighScore(n);
                     MessageBox.Show("You failed three times. Better luck next time!");
                     Close();
                 }
@@ -102,7 +109,7 @@ namespace LearnThePrimesWinForm
             {
                 remainingGuessesBar3.Value = 0;
             }
-            else if(remainingGuesses == 1)
+            else if (remainingGuesses == 1)
             {
                 remainingGuessesBar2.Value = 0;
             }
@@ -110,6 +117,56 @@ namespace LearnThePrimesWinForm
             {
                 remainingGuessesBar1.Value = 0;
             }
+        }
+
+        private void SaveHighScore(int currentScore)
+        {
+            //FileStream fParameter = new FileStream(dirParameter, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            //StreamReader m_ReaderParameter = new StreamReader(fParameter);
+            //var saveFile = File.OpenRead(dirParameter);
+            //saveFile.Read
+            //string[] arrSaveFile = File.ReadAllLines(dirParameter);
+            //if (2 < currentScore)
+            //{
+            //    ;
+            //}
+
+            try
+            {
+                stringHighScore = ReadTxt();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            Int32.TryParse(stringHighScore, out int highScore);
+
+            if (highScore != null)
+            {
+                if (highScore < currentScore)
+                {
+                    WriteTxt(currentScore);
+                }
+            }
+        }
+
+        static void WriteTxt(int scoreToSave)
+        {
+            StreamWriter sw = new StreamWriter(dirParameter);
+            sw.WriteLine(scoreToSave);
+            sw.Close();
+        }
+
+        static string ReadTxt()
+        {
+            if (File.Exists(dirParameter))
+            {
+                StreamReader sr = new StreamReader(dirParameter);
+                string stringHighScore = sr.ReadLine();
+                sr.Close();
+                return stringHighScore;
+            }
+            return null;
         }
     }
 }
