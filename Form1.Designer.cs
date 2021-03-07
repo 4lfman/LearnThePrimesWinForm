@@ -33,6 +33,9 @@ namespace LearnThePrimesWinForm
             this.enterBtn = new System.Windows.Forms.Button();
             this.primeNrLbl = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.remainingGuessesBar1 = new System.Windows.Forms.ProgressBar();
+            this.remainingGuessesBar2 = new System.Windows.Forms.ProgressBar();
+            this.remainingGuessesBar3 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.guessNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,12 +73,36 @@ namespace LearnThePrimesWinForm
             this.listBox1.Size = new System.Drawing.Size(120, 199);
             this.listBox1.TabIndex = 3;
             // 
+            // remainingGuessesBar1
+            // 
+            this.remainingGuessesBar1.Location = new System.Drawing.Point(203, 179);
+            this.remainingGuessesBar1.Name = "remainingGuessesBar1";
+            this.remainingGuessesBar1.Size = new System.Drawing.Size(22, 62);
+            this.remainingGuessesBar1.TabIndex = 4;
+            // 
+            // remainingGuessesBar2
+            // 
+            this.remainingGuessesBar2.Location = new System.Drawing.Point(232, 179);
+            this.remainingGuessesBar2.Name = "remainingGuessesBar2";
+            this.remainingGuessesBar2.Size = new System.Drawing.Size(22, 62);
+            this.remainingGuessesBar2.TabIndex = 5;
+            // 
+            // remainingGuessesBar3
+            // 
+            this.remainingGuessesBar3.Location = new System.Drawing.Point(259, 179);
+            this.remainingGuessesBar3.Name = "remainingGuessesBar3";
+            this.remainingGuessesBar3.Size = new System.Drawing.Size(22, 62);
+            this.remainingGuessesBar3.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AcceptButton = this.enterBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 276);
+            this.Controls.Add(this.remainingGuessesBar3);
+            this.Controls.Add(this.remainingGuessesBar2);
+            this.Controls.Add(this.remainingGuessesBar1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.primeNrLbl);
             this.Controls.Add(this.enterBtn);
@@ -97,6 +124,9 @@ namespace LearnThePrimesWinForm
         private System.Windows.Forms.Button enterBtn;
         private System.Windows.Forms.Label primeNrLbl;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ProgressBar remainingGuessesBar1;
+        private System.Windows.Forms.ProgressBar remainingGuessesBar2;
+        private System.Windows.Forms.ProgressBar remainingGuessesBar3;
     }
 }
 
