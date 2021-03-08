@@ -37,19 +37,21 @@ namespace LearnThePrimesWinForm
             this.remainingGuessesBar2 = new System.Windows.Forms.ProgressBar();
             this.remainingGuessesBar3 = new System.Windows.Forms.ProgressBar();
             this.highScoreLabel = new System.Windows.Forms.Label();
+            this.helpBtn = new System.Windows.Forms.Button();
+            this.primeWikiLinkLabel = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.guessNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // guessNumericUpDown
             // 
-            this.guessNumericUpDown.Location = new System.Drawing.Point(183, 47);
+            this.guessNumericUpDown.Location = new System.Drawing.Point(186, 51);
             this.guessNumericUpDown.Name = "guessNumericUpDown";
             this.guessNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.guessNumericUpDown.TabIndex = 0;
             // 
             // enterBtn
             // 
-            this.enterBtn.Location = new System.Drawing.Point(206, 99);
+            this.enterBtn.Location = new System.Drawing.Point(206, 90);
             this.enterBtn.Name = "enterBtn";
             this.enterBtn.Size = new System.Drawing.Size(75, 23);
             this.enterBtn.TabIndex = 1;
@@ -60,7 +62,7 @@ namespace LearnThePrimesWinForm
             // primeNrLbl
             // 
             this.primeNrLbl.AutoSize = true;
-            this.primeNrLbl.Location = new System.Drawing.Point(197, 136);
+            this.primeNrLbl.Location = new System.Drawing.Point(197, 127);
             this.primeNrLbl.Name = "primeNrLbl";
             this.primeNrLbl.Size = new System.Drawing.Size(57, 13);
             this.primeNrLbl.TabIndex = 2;
@@ -69,28 +71,28 @@ namespace LearnThePrimesWinForm
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(21, 42);
+            this.listBox1.Location = new System.Drawing.Point(30, 36);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 199);
             this.listBox1.TabIndex = 3;
             // 
             // remainingGuessesBar1
             // 
-            this.remainingGuessesBar1.Location = new System.Drawing.Point(203, 179);
+            this.remainingGuessesBar1.Location = new System.Drawing.Point(203, 170);
             this.remainingGuessesBar1.Name = "remainingGuessesBar1";
             this.remainingGuessesBar1.Size = new System.Drawing.Size(22, 62);
             this.remainingGuessesBar1.TabIndex = 4;
             // 
             // remainingGuessesBar2
             // 
-            this.remainingGuessesBar2.Location = new System.Drawing.Point(232, 179);
+            this.remainingGuessesBar2.Location = new System.Drawing.Point(232, 170);
             this.remainingGuessesBar2.Name = "remainingGuessesBar2";
             this.remainingGuessesBar2.Size = new System.Drawing.Size(22, 62);
             this.remainingGuessesBar2.TabIndex = 5;
             // 
             // remainingGuessesBar3
             // 
-            this.remainingGuessesBar3.Location = new System.Drawing.Point(259, 179);
+            this.remainingGuessesBar3.Location = new System.Drawing.Point(259, 170);
             this.remainingGuessesBar3.Name = "remainingGuessesBar3";
             this.remainingGuessesBar3.Size = new System.Drawing.Size(22, 62);
             this.remainingGuessesBar3.TabIndex = 6;
@@ -98,11 +100,32 @@ namespace LearnThePrimesWinForm
             // highScoreLabel
             // 
             this.highScoreLabel.AutoSize = true;
-            this.highScoreLabel.Location = new System.Drawing.Point(197, 153);
+            this.highScoreLabel.Location = new System.Drawing.Point(197, 144);
             this.highScoreLabel.Name = "highScoreLabel";
-            this.highScoreLabel.Size = new System.Drawing.Size(35, 13);
+            this.highScoreLabel.Size = new System.Drawing.Size(67, 13);
             this.highScoreLabel.TabIndex = 7;
-            this.highScoreLabel.Text = "label1";
+            this.highScoreLabel.Text = "Highscore: 0";
+            // 
+            // helpBtn
+            // 
+            this.helpBtn.Location = new System.Drawing.Point(30, 241);
+            this.helpBtn.Name = "helpBtn";
+            this.helpBtn.Size = new System.Drawing.Size(75, 23);
+            this.helpBtn.TabIndex = 8;
+            this.helpBtn.Text = "Help";
+            this.helpBtn.UseVisualStyleBackColor = true;
+            this.helpBtn.Click += new System.EventHandler(this.helpBtn_Click);
+            // 
+            // primeWikiLinkLabel
+            // 
+            this.primeWikiLinkLabel.AutoSize = true;
+            this.primeWikiLinkLabel.Location = new System.Drawing.Point(111, 246);
+            this.primeWikiLinkLabel.Name = "primeWikiLinkLabel";
+            this.primeWikiLinkLabel.Size = new System.Drawing.Size(128, 13);
+            this.primeWikiLinkLabel.TabIndex = 9;
+            this.primeWikiLinkLabel.TabStop = true;
+            this.primeWikiLinkLabel.Text = "Prime Numbers Wikipedia";
+            this.primeWikiLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.primeWikiLinkLabel_LinkClicked);
             // 
             // Form1
             // 
@@ -110,6 +133,8 @@ namespace LearnThePrimesWinForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 276);
+            this.Controls.Add(this.primeWikiLinkLabel);
+            this.Controls.Add(this.helpBtn);
             this.Controls.Add(this.highScoreLabel);
             this.Controls.Add(this.remainingGuessesBar3);
             this.Controls.Add(this.remainingGuessesBar2);
@@ -139,6 +164,8 @@ namespace LearnThePrimesWinForm
         private System.Windows.Forms.ProgressBar remainingGuessesBar2;
         private System.Windows.Forms.ProgressBar remainingGuessesBar3;
         private System.Windows.Forms.Label highScoreLabel;
+        private System.Windows.Forms.Button helpBtn;
+        private System.Windows.Forms.LinkLabel primeWikiLinkLabel;
     }
 }
 

@@ -14,7 +14,7 @@ namespace LearnThePrimesWinForm
     public partial class Form1 : Form
     {
         List<int> primes = new List<int>(GeneratePrimesNaive(100));
-        int n = 0;
+        int primeToGuess = 0;
         int remainingGuesses = 3;
         public static string dirParameter = AppDomain.CurrentDomain.BaseDirectory + @"\SaveFile.txt";
         string stringHighScore;
@@ -52,40 +52,72 @@ namespace LearnThePrimesWinForm
         public Form1()
         {
             InitializeComponent();
+            StartGame();
+        }
 
+        private void StartGame()
+        {
             highScoreLabel.Text = ("Highscore: " + ReadTxt());
 
+            //Highlights the zero in the input box so the user doesn't have to
             guessNumericUpDown.Select(0, guessNumericUpDown.Value.ToString().Length);
-            remainingGuessesBar1.Value = 100;
-            remainingGuessesBar2.Value = 100;
-            remainingGuessesBar3.Value = 100;
+            SetRemainingLives();
+        }
+
+        /// <summary>
+        /// Resets the entire form to make it ready for another game
+        /// (reset colors, enable buttons, reset variables, fix label and listBox content)
+        /// and then calls StartGame to do the normal first time startup
+        /// </summary>
+        private void ResetGame()
+        {
+            BackColor = SystemColors.Control;
+            guessNumericUpDown.BackColor = SystemColors.Control;
+            enterBtn.Enabled = true;
+
+            primeToGuess = 0;
+            remainingGuesses = 3;
+            guessNumericUpDown.Value = 0;
+
+            listBox1.Items.Clear();
+            primeNrLbl.Text = ("Prime nr: " + primeToGuess);
+
+            StartGame();
         }
 
         private void enterBtn_Click(object sender, EventArgs e)
         {
             //If the answer is correct:
             //make the input box green, add the correct number to the listBox, get the next prime
-            if (guessNumericUpDown.Value == primes[n])
+            if (guessNumericUpDown.Value == primes[primeToGuess])
             {
                 guessNumericUpDown.BackColor = Color.Green;
-                listBox1.Items.Insert(0, primes[n]);
-                n++;
+                listBox1.Items.Insert(0, primes[primeToGuess]);
+                primeToGuess++;
 
-                primeNrLbl.Text = "Prime nr: " + (n);
+                primeNrLbl.Text = ("Prime nr: " + primeToGuess);
             }
             else
             {
                 guessNumericUpDown.BackColor = Color.Red;
                 remainingGuesses--;
                 SetRemainingLives();
-                //remainingGuessesBar1.Value -= 33;
                 if (remainingGuesses == 0)
                 {
                     BackColor = Color.Red;
                     enterBtn.Enabled = false;
-                    SaveHighScore(n);
-                    MessageBox.Show("You failed three times. Better luck next time!");
-                    Close();
+                    SaveHighScore(primeToGuess);
+                    //MessageBox.Show("You failed three times. Better luck next time!");
+                    var startOver = MessageBox.Show("You failed three times. Better luck next time!", "Defeat", MessageBoxButtons.YesNo);
+
+                    if (startOver == DialogResult.Yes)
+                    {
+                        ResetGame();
+                    }
+                    else
+                    {
+                        Close();
+                    }
                 }
             }
 
@@ -126,10 +158,6 @@ namespace LearnThePrimesWinForm
             //var saveFile = File.OpenRead(dirParameter);
             //saveFile.Read
             //string[] arrSaveFile = File.ReadAllLines(dirParameter);
-            //if (2 < currentScore)
-            //{
-            //    ;
-            //}
 
             try
             {
@@ -139,9 +167,8 @@ namespace LearnThePrimesWinForm
             {
                 throw;
             }
-            Int32.TryParse(stringHighScore, out int highScore);
 
-            if (highScore != null)
+            if (Int32.TryParse(stringHighScore, out int highScore))
             {
                 if (highScore < currentScore)
                 {
@@ -167,6 +194,19 @@ namespace LearnThePrimesWinForm
                 return stringHighScore;
             }
             return null;
+        }
+
+        private void helpBtn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("In this game you can test you knowledge of the prime numbers." +
+                "\nYou write your guess into the box on the right and either hit the 'Enter' button on the form or the one on your keyboard."+
+                "\nYou have three lives and when they run out, the game is over.\nGood Luck!", "Help");
+        }
+
+        private void primeWikiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            primeWikiLinkLabel.LinkVisited = true;
+            System.Diagnostics.Process.Start("https://en.wikipedia.org/wiki/Prime_number");
         }
     }
 }
