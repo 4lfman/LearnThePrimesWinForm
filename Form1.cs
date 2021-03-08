@@ -23,12 +23,12 @@ namespace LearnThePrimesWinForm
         /// Generates the primes that are going to be 
         /// used to check if the answer was correct
         /// </summary>
-        public static List<int> GeneratePrimesNaive(int n)
+        public static List<int> GeneratePrimesNaive(int nrOfPrimes)
         {
             List<int> primes = new List<int>();
             primes.Add(2);
             int nextPrime = 3;
-            while (primes.Count < n)
+            while (primes.Count < nrOfPrimes)
             {
                 int sqrt = (int)Math.Sqrt(nextPrime);
                 bool isPrime = true;
@@ -102,14 +102,14 @@ namespace LearnThePrimesWinForm
                 guessNumericUpDown.BackColor = Color.Red;
                 remainingGuesses--;
                 SetRemainingLives();
+
                 if (remainingGuesses == 0)
                 {
                     BackColor = Color.Red;
                     enterBtn.Enabled = false;
                     SaveHighScore(primeToGuess);
-                    //MessageBox.Show("You failed three times. Better luck next time!");
-                    var startOver = MessageBox.Show("You failed three times. Better luck next time!", "Defeat", MessageBoxButtons.YesNo);
 
+                    var startOver = MessageBox.Show("You failed three times. Do you want to try again?", "Defeat", MessageBoxButtons.YesNo);
                     if (startOver == DialogResult.Yes)
                     {
                         ResetGame();
@@ -139,26 +139,26 @@ namespace LearnThePrimesWinForm
             }
             else if (remainingGuesses == 2)
             {
+                remainingGuessesBar1.Value = 100;
+                remainingGuessesBar2.Value = 100;
                 remainingGuessesBar3.Value = 0;
             }
             else if (remainingGuesses == 1)
             {
+                remainingGuessesBar1.Value = 100;
                 remainingGuessesBar2.Value = 0;
+                remainingGuessesBar3.Value = 0;
             }
             else
             {
                 remainingGuessesBar1.Value = 0;
+                remainingGuessesBar2.Value = 0;
+                remainingGuessesBar3.Value = 0;
             }
         }
 
         private void SaveHighScore(int currentScore)
         {
-            //FileStream fParameter = new FileStream(dirParameter, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            //StreamReader m_ReaderParameter = new StreamReader(fParameter);
-            //var saveFile = File.OpenRead(dirParameter);
-            //saveFile.Read
-            //string[] arrSaveFile = File.ReadAllLines(dirParameter);
-
             try
             {
                 stringHighScore = ReadTxt();
@@ -168,6 +168,7 @@ namespace LearnThePrimesWinForm
                 throw;
             }
 
+            //TryParse might be unnessesary but the program doesn't crash if the savefile is altered
             if (Int32.TryParse(stringHighScore, out int highScore))
             {
                 if (highScore < currentScore)
