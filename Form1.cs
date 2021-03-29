@@ -14,7 +14,7 @@ namespace LearnThePrimesWinForm
     public partial class Form1 : Form
     {
         List<int> primes = new List<int>(GeneratePrimesNaive(100));
-        int primeToGuess = 0;
+        int primeToGuessIndex = 0;
         int remainingGuesses = 3;
         public static string dirParameter = AppDomain.CurrentDomain.BaseDirectory + @"\SaveFile.txt";
         string stringHighScore;
@@ -75,12 +75,12 @@ namespace LearnThePrimesWinForm
             guessNumericUpDown.BackColor = SystemColors.Control;
             enterBtn.Enabled = true;
 
-            primeToGuess = 0;
+            primeToGuessIndex = 0;
             remainingGuesses = 3;
             guessNumericUpDown.Value = 0;
 
             listBox1.Items.Clear();
-            primeNrLbl.Text = ("Prime nr: " + primeToGuess);
+            primeNrLbl.Text = ("Prime nr: " + primeToGuessIndex);
 
             StartGame();
         }
@@ -89,13 +89,13 @@ namespace LearnThePrimesWinForm
         {
             //If the answer is correct:
             //make the input box green, add the correct number to the listBox, get the next prime
-            if (guessNumericUpDown.Value == primes[primeToGuess])
+            if (guessNumericUpDown.Value == primes[primeToGuessIndex])
             {
                 guessNumericUpDown.BackColor = Color.Green;
-                listBox1.Items.Insert(0, primes[primeToGuess]);
-                primeToGuess++;
+                listBox1.Items.Insert(0, primes[primeToGuessIndex]);
+                primeToGuessIndex++;
 
-                primeNrLbl.Text = ("Prime nr: " + primeToGuess);
+                primeNrLbl.Text = ("Prime nr: " + primeToGuessIndex);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace LearnThePrimesWinForm
                 {
                     BackColor = Color.Red;
                     enterBtn.Enabled = false;
-                    SaveHighScore(primeToGuess);
+                    SaveHighScore(primeToGuessIndex);
 
                     var startOver = MessageBox.Show("You failed three times. Do you want to try again?", "Defeat", MessageBoxButtons.YesNo);
                     if (startOver == DialogResult.Yes)
