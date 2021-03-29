@@ -168,40 +168,46 @@ namespace LearnThePrimesWinForm
                 throw;
             }
 
-            //TryParse might be unnessesary but the program doesn't crash if the savefile is altered
+            //If it can parse the number it compares to the highscore, otherwise it writes the current score
+            //This also means that if the file is empty or doesn't exist it will still write to it/create a new one
             if (Int32.TryParse(stringHighScore, out int highScore))
             {
                 if (highScore < currentScore)
                 {
                     WriteTxt(currentScore);
                 }
+                return;
             }
+            WriteTxt(currentScore);
         }
 
         static void WriteTxt(int scoreToSave)
         {
-            StreamWriter sw = new StreamWriter(dirParameter);
-            sw.WriteLine(scoreToSave);
-            sw.Close();
+            using (StreamWriter sw = new StreamWriter(dirParameter))
+            {
+                sw.WriteLine(scoreToSave);
+            }
         }
 
         static string ReadTxt()
         {
             if (File.Exists(dirParameter))
             {
-                StreamReader sr = new StreamReader(dirParameter);
-                string stringHighScore = sr.ReadLine();
-                sr.Close();
-                return stringHighScore;
+                using (StreamReader sr = new StreamReader(dirParameter))
+                {
+                    string stringHighScore = sr.ReadLine();
+                    return stringHighScore;
+                }
             }
-            return null;
+            return "0"; //If we can't find a file we assume the highscore of 0
         }
 
         private void helpBtn_Click(object sender, EventArgs e)
         {
             MessageBox.Show("In this game you can test you knowledge of the prime numbers." +
-                "\nYou write your guess into the box on the right and either hit the 'Enter' button on the form or the one on your keyboard."+
-                "\nYou have three lives and when they run out, the game is over.\nGood Luck!", "Help");
+                "\nYou write your guess into the box on the right and either hit the 'Enter' button on the form or the one on your keyboard." +
+                "\nYou have three lives and when they run out, the game is over." +
+                "\nGood Luck!", "Help");
         }
 
         private void primeWikiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
