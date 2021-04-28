@@ -13,26 +13,29 @@ namespace LearnThePrimesWinForm
 {
     public partial class Form1 : Form
     {
-        List<int> primes = new List<int>(GeneratePrimesNaive(100));
+        static List<int> primes = new List<int>();
+        IEnumerator<int> getPrimes;
+
         int primeToGuessIndex = 0;
         int remainingGuesses = 3;
         public static string dirParameter = AppDomain.CurrentDomain.BaseDirectory + @"\SaveFile.txt";
         string stringHighScore;
 
         /// <summary>
-        /// Generates the primes that are going to be 
-        /// used to check if the answer was correct
+        /// Gets the prime numbers one by one as the user progresses
         /// </summary>
-        public static List<int> GeneratePrimesNaive(int nrOfPrimes)
+        public static IEnumerable<int> GeneratePrimes()
         {
-            List<int> primes = new List<int>();
             primes.Add(2);
+            yield return 2; //Hardcoding the only even prime lets us only check the odd numbers in the below loop
+
             int nextPrime = 3;
-            while (primes.Count < nrOfPrimes)
+
+            while (true)
             {
                 int sqrt = (int)Math.Sqrt(nextPrime);
                 bool isPrime = true;
-                for (int i = 0; (int)primes[i] <= sqrt; i++)
+                for (int i = 0; primes[i] <= sqrt; i++) //Atleast one factor must be less than the square root of the number, which means that we don't have to check further
                 {
                     if (nextPrime % primes[i] == 0)
                     {
@@ -43,10 +46,10 @@ namespace LearnThePrimesWinForm
                 if (isPrime)
                 {
                     primes.Add(nextPrime);
+                    yield return nextPrime;
                 }
                 nextPrime += 2;
             }
-            return primes;
         }
 
         public Form1()
@@ -58,6 +61,10 @@ namespace LearnThePrimesWinForm
         private void StartGame()
         {
             highScoreLabel.Text = ("Highscore: " + ReadTxt());
+
+            //Starts/Resets GeneratePrimes
+            getPrimes = GeneratePrimes().GetEnumerator();
+            getPrimes.MoveNext(); 
 
             //Highlights the zero in the input box so the user doesn't have to
             guessNumericUpDown.Select(0, guessNumericUpDown.Value.ToString().Length);
@@ -89,10 +96,12 @@ namespace LearnThePrimesWinForm
         {
             //If the answer is correct:
             //make the input box green, add the correct number to the listBox, get the next prime
-            if (guessNumericUpDown.Value == primes[primeToGuessIndex])
+            if (guessNumericUpDown.Value == getPrimes.Current)
             {
                 guessNumericUpDown.BackColor = Color.Green;
-                listBox1.Items.Insert(0, primes[primeToGuessIndex]);
+                listBox1.Items.Insert(0, getPrimes.Current);
+
+                getPrimes.MoveNext();
                 primeToGuessIndex++;
 
                 primeNrLbl.Text = ("Prime nr: " + primeToGuessIndex);
@@ -128,6 +137,7 @@ namespace LearnThePrimesWinForm
 
         /// <summary>
         /// Changes the values for the progress bars that indicate the remaining guesses
+        /// All the extra lines are unnessisary but they are so cheap and makes it more foolproof if you for example want to intoduce the abillity to increase health
         /// </summary>
         private void SetRemainingLives()
         {
